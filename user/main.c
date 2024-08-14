@@ -6,10 +6,10 @@
 #include <string.h>
 #include <stdint.h>
 
-#define DEVICE_NAME "/dev/fpgawifi"
-#define IOCTL_GET_STATS _IOR('f', 1, struct fpgawifi_rc_stats*)
+#define DEVICE_NAME "/dev/dummy_device"
+#define IOCTL_GET_STATS _IOR('f', 1, struct dummy_rc_stats*)
 
-struct fpgawifi_rate_stats {
+struct dummy_rate_stats {
     uint8_t mcs;
     uint8_t nss;
     unsigned long nr_transmits;
@@ -17,20 +17,20 @@ struct fpgawifi_rate_stats {
     unsigned long nr_success;
 };
 
-struct fpgawifi_rc_stats_per_sta {
+struct dummy_rc_stats_per_sta {
     uint8_t mac_addr[6];
     uint8_t last_rate_selected;
-    struct fpgawifi_rate_stats rate_stats[40];
+    struct dummy_rate_stats rate_stats[40];
 };
 
-struct fpgawifi_rc_stats {
+struct dummy_rc_stats {
     uint8_t nr_of_stas;
-    struct fpgawifi_rc_stats_per_sta sta_rc_stats[32];
+    struct dummy_rc_stats_per_sta sta_rc_stats[32];
 };
 
 int main() {
     int fd;
-    struct fpgawifi_rc_stats stats;
+    struct dummy_rc_stats stats;
 
     fd = open(DEVICE_NAME, O_RDONLY);
     if (fd < 0) {

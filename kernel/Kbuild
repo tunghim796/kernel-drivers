@@ -1,4 +1,4 @@
 #Kbuild
 EXTRA_CFLAGS = -Wall
 
-obj-m = rc_stats.o
+obj-m = dummy_driver.o
