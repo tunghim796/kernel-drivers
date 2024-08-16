@@ -1,0 +1,50 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up build environment
+      run: |
+            sudo apt-get install -y build-essential
+            sudo apt-get update 
+            sudo apt-get install gawk wget git diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm ncurses-dev lzop
+            sudo apt-get install gcc-arm-linux-gnueabihf
+
+    - name: Build users code
+      working-directory: user
+      run: |
+        make
+
+    - name: Build kernel code
+      working-directory: kernel
+      run: |
+        make
+
+    - name: Run user application
+      working-directory: user
+      run: |
+        sudo ./user
+
+    - name: Insert kernel module
+      working-directory: kernel
+      run: |
+        sudo insmod dummy_module.ko
+
+    - name: Remove kernel module
+      run: |
+        sudo rmmod dummy_module
+
+    - name: Check kernel module
+      run: |
+        lsmod | grep dummy_module
