@@ -25,7 +25,7 @@ jobs:
     - name: Build kernel code
       working-directory: kernel
       run: |
-        make -f Kbuild
+        make
 
     - name: Run user application
       working-directory: user
