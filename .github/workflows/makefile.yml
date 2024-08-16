@@ -18,7 +18,7 @@ jobs:
       run: sudo apt-get install -y build-essential
 
     - name: Build users code
-      working-directory: users
+      working-directory: user
       run: |
         make
 
@@ -28,7 +28,7 @@ jobs:
         make -f Kbuild
 
     - name: Run user application
-      working-directory: users
+      working-directory: user
       run: |
         sudo ./user
 
