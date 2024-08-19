@@ -1,6 +1,6 @@
 # Use an official Debian or Ubuntu as a parent image
 # FROM debian:bullseye
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 
 # Set the working directory in the container
 WORKDIR /home/tung/git/kernel-drivers
@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     g++ \
     make \
     cmake \
+    kmod \
     linux-headers-5.15.0-117-generic
     # linux-headers-$(uname -r)
 
