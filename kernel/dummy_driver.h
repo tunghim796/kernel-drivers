@@ -22,6 +22,15 @@
 #define CLASS_NAME  "dummy_class"
 #define IOCTL_GET_STATS _IOR('f', 1, struct dummy_rc_stats*)
 
+#define KOBJ_ATTR_SET(kattr, attr_name, perm, show_fn, store_fn) \
+    do { \
+        static const char __stringify_name[] = __stringify(attr_name); \
+        (kattr).attr.name = __stringify_name; \
+        (kattr).attr.mode = perm; \
+        (kattr).show = show_fn; \
+        (kattr).store = store_fn; \
+    } while (0)
+
 
 struct dummy_rate_stats {
     uint8_t mcs;
@@ -42,10 +51,18 @@ struct dummy_rc_stats {
     struct dummy_rc_stats_per_sta sta_rc_stats[32];
 };
 
+struct tnhb_kobj_group {
+    struct kobject *example_kobj;
+
+    struct kobj_attribute example_attr;
+};
+
 struct tungnh_base {
     dev_t dev_num;
     struct class *dev_class;
     struct device *dev;
+
+    struct tnhb_kobj_group tnhb_kobj;
 };
 
 
