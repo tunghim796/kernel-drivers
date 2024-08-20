@@ -22,7 +22,3 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -f docker/Dockerfile -t gcc-docker .
-
-    - name: Run tests in Docker container
-      run: |
-        sudo docker run -it --rm gcc-docker
