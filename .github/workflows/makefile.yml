@@ -16,9 +16,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-
-    - name: Build Docker image
+    - name: Set up build environment
       run: |
-        docker build -f docker/Dockerfile -t gcc-docker .
+            sudo apt-get install -y build-essential
+            sudo apt-get update 
+            sudo apt-get install gawk wget git diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm ncurses-dev lzop
+            sudo apt-get install gcc-arm-linux-gnueabihf
+
+    - name: Build users code
+      run: |
+        make
