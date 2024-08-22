@@ -10,7 +10,7 @@ on:
 
 jobs:
   build_and_test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout code
@@ -18,10 +18,13 @@ jobs:
 
     - name: Set up build environment
       run: |
-            sudo apt-get install -y build-essential
-            sudo apt-get update 
-            sudo apt-get install gawk wget git diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm ncurses-dev lzop
-            sudo apt-get install gcc-arm-linux-gnueabihf
+        sudo apt-get update
+        sudo apt-get install -y gcc-9 g++-9
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
+        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
+
+    - name: Verify GCC version
+      run: gcc --version
 
     - name: Build users code
       run: |
